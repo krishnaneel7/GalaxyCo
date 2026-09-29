@@ -1,0 +1,507 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>GalaxyCo - Customer Request</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fafc,
+                    #e0f2fe
+                );
+
+            color: #1e293b;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: #0f172a;
+
+            color: white;
+
+            padding: 18px 7%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .welcome {
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        .logout {
+            text-decoration: none;
+
+            color: white;
+
+            background: #dc2626;
+
+            padding: 9px 16px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+        .logout:hover {
+            background: #b91c1c;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 900px;
+
+            margin: 50px auto;
+
+            padding: 0 20px;
+        }
+
+        .title-section {
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+        .title-section h1 {
+            font-size: 34px;
+
+            color: #0f172a;
+
+            margin-bottom: 10px;
+        }
+
+        .title-section p {
+            color: #64748b;
+
+            font-size: 16px;
+        }
+
+        /* ================= FORM CARD ================= */
+
+        .request-card {
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(15, 23, 42, 0.12);
+        }
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #334155;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            background: white;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.10);
+        }
+
+        textarea {
+            min-height: 130px;
+
+            resize: vertical;
+        }
+
+        /* ================= ERRORS ================= */
+
+        .errorlist {
+            list-style: none;
+
+            color: #dc2626;
+
+            font-size: 13px;
+
+            margin-bottom: 6px;
+
+            padding: 0;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .submit-button {
+            width: 100%;
+
+            border: none;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 10px;
+
+            transition: 0.2s;
+        }
+
+        .submit-button:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+        }
+
+        /* ================= INFO ================= */
+
+        .info-box {
+            margin-top: 25px;
+
+            padding: 16px;
+
+            background: #eff6ff;
+
+            border: 1px solid #bfdbfe;
+
+            border-radius: 10px;
+
+            color: #1e40af;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 16px 20px;
+            }
+
+            .header-right {
+                gap: 10px;
+            }
+
+            .welcome {
+                display: none;
+            }
+
+            .container {
+                margin: 30px auto;
+            }
+
+            .request-card {
+                padding: 25px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .title-section h1 {
+                font-size: 28px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="logo">
+        GalaxyCo
+    </div>
+
+    <div class="header-right">
+
+        <div class="welcome">
+
+            Welcome,
+            <strong>
+                {{ request.user.username }}
+            </strong>
+
+        </div>
+
+        <a
+            href="{% url 'customer_logout' %}"
+            class="logout"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <div class="title-section">
+
+        <h1>
+            Customer Request
+        </h1>
+
+        <p>
+            Submit your antenna requirement and our team
+            will contact you shortly.
+        </p>
+
+    </div>
+
+
+    <!-- ================= REQUEST FORM ================= -->
+
+    <div class="request-card">
+
+        <form
+            method="POST"
+            action="{% url 'customer_request' %}"
+        >
+
+            {% csrf_token %}
+
+
+            {% if form.non_field_errors %}
+
+                {{ form.non_field_errors }}
+
+            {% endif %}
+
+
+            <div class="form-grid">
+
+
+                <!-- CUSTOMER NAME -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.name.id_for_label }}">
+                        Customer Name
+                    </label>
+
+                    {{ form.name }}
+
+                    {{ form.name.errors }}
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.email.id_for_label }}">
+                        Email Address
+                    </label>
+
+                    {{ form.email }}
+
+                    {{ form.email.errors }}
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.phone.id_for_label }}">
+                        Phone Number
+                    </label>
+
+                    {{ form.phone }}
+
+                    {{ form.phone.errors }}
+
+                </div>
+
+
+                <!-- ANTENNA -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.product.id_for_label }}">
+                        Select Antenna
+                    </label>
+
+                    {{ form.product }}
+
+                    {{ form.product.errors }}
+
+                </div>
+
+
+                <!-- QUANTITY -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.quantity.id_for_label }}">
+                        Quantity
+                    </label>
+
+                    {{ form.quantity }}
+
+                    {{ form.quantity.errors }}
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <div class="form-group full-width">
+
+                    <label for="{{ form.message.id_for_label }}">
+                        Additional Requirements
+                    </label>
+
+                    {{ form.message }}
+
+                    {{ form.message.errors }}
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="submit-button"
+            >
+                Submit Request
+            </button>
+
+
+        </form>
+
+
+        <!-- INFORMATION -->
+
+        <div class="info-box">
+
+            <strong>What happens next?</strong>
+
+            <br>
+
+            Your request will be securely saved in the
+            GalaxyCo owner dashboard. Our team will review
+            your antenna requirement and contact you regarding
+            availability, quantity and pricing.
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>
+```

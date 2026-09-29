@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Update Request | GalaxyCo
+    </title>
+
+
+    <style>
+
+        * {
+
+            box-sizing:
+                border-box;
+
+        }
+
+
+        body {
+
+            margin:
+                0;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            background:
+                #f3f4f6;
+
+        }
+
+
+        .container {
+
+            min-height:
+                100vh;
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            padding:
+                20px;
+
+        }
+
+
+        .card {
+
+            width:
+                100%;
+
+            max-width:
+                550px;
+
+            background:
+                white;
+
+            padding:
+                35px;
+
+            border-radius:
+                16px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,0.08);
+
+        }
+
+
+        h1 {
+
+            margin-bottom:
+                25px;
+
+        }
+
+
+        .info {
+
+            background:
+                #f9fafb;
+
+            padding:
+                15px;
+
+            border-radius:
+                8px;
+
+            margin-bottom:
+                20px;
+
+        }
+
+
+        .info p {
+
+            margin:
+                8px 0;
+
+        }
+
+
+        label {
+
+            font-weight:
+                bold;
+
+            display:
+                block;
+
+            margin-bottom:
+                8px;
+
+        }
+
+
+        select {
+
+            width:
+                100%;
+
+            padding:
+                13px;
+
+            border:
+                1px solid #d1d5db;
+
+            border-radius:
+                8px;
+
+            font-size:
+                15px;
+
+        }
+
+
+        button {
+
+            width:
+                100%;
+
+            margin-top:
+                20px;
+
+            padding:
+                14px;
+
+            border:
+                none;
+
+            border-radius:
+                8px;
+
+            background:
+                #2563eb;
+
+            color:
+                white;
+
+            font-size:
+                16px;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .back {
+
+            display:
+                block;
+
+            text-align:
+                center;
+
+            margin-top:
+                15px;
+
+            color:
+                #2563eb;
+
+            text-decoration:
+                none;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <div class="card">
+
+
+        <h1>
+
+            Update Request
+
+        </h1>
+
+
+
+        <div class="info">
+
+
+            <p>
+
+                <strong>
+                    Customer:
+                </strong>
+
+                {{ customer_request.name }}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Email:
+                </strong>
+
+                {{ customer_request.email }}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Phone:
+                </strong>
+
+                {{ customer_request.phone }}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Product:
+                </strong>
+
+                {{ customer_request.product }}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Quantity:
+                </strong>
+
+                {{ customer_request.quantity }}
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    Message:
+                </strong>
+
+                {{ customer_request.message }}
+
+            </p>
+
+
+        </div>
+
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <label>
+
+                Request Status
+
+            </label>
+
+
+            <select name="status">
+
+
+                <option
+
+                    value="Pending"
+
+                    {% if customer_request.status == "Pending" %}
+
+                        selected
+
+                    {% endif %}
+
+                >
+
+                    Pending
+
+                </option>
+
+
+
+                <option
+
+                    value="Contacted"
+
+                    {% if customer_request.status == "Contacted" %}
+
+                        selected
+
+                    {% endif %}
+
+                >
+
+                    Contacted
+
+                </option>
+
+
+
+                <option
+
+                    value="Completed"
+
+                    {% if customer_request.status == "Completed" %}
+
+                        selected
+
+                    {% endif %}
+
+                >
+
+                    Completed
+
+                </option>
+
+
+            </select>
+
+
+
+            <button type="submit">
+
+                Update Request
+
+            </button>
+
+
+        </form>
+
+
+
+        <a
+
+            href="{% url 'owner_dashboard' %}"
+
+            class="back"
+
+        >
+
+            ← Back to Dashboard
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
